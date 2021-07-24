@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9a061e83b8f8a6848a570de9167118a3, type: 2}
+  - {fileID: 2100000, guid: 117891831a5f0e34db8fba1e749287d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -155,7 +155,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9a061e83b8f8a6848a570de9167118a3, type: 2}
+  - {fileID: 2100000, guid: 117891831a5f0e34db8fba1e749287d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -235,6 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7deb8cd92edcd6c419e0e5cdbf021b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entrance: 1
   speed: 300
   trippleWallType:
   - {fileID: 6697571983044502090, guid: 31a6837445ead2447b6923cbf6ad6a9a, type: 3}
@@ -243,6 +244,7 @@ MonoBehaviour:
   singleWallType:
   - {fileID: 6697571983044502090, guid: 31a6837445ead2447b6923cbf6ad6a9a, type: 3}
   trippleMovement: 1
+  counter: 0
 --- !u!54 &8736881893117027702
 Rigidbody:
   m_ObjectHideFlags: 0

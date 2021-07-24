@@ -9,7 +9,7 @@ public class holeController : MonoBehaviour
     private int fallSpeed;
     [SerializeField] private int speed;
     private bool reset = true;
-    WallController controller;
+    Transform wall;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -36,16 +36,16 @@ public class holeController : MonoBehaviour
             rb.velocity = new Vector3(0, 0, -speed) * Time.deltaTime;
         }
     }
-    public void SetUpController(WallController wallController)
+    public void SetUpController(GameObject wallController)
     {
-        controller = wallController;
+        wall = wallController.gameObject.transform;
     }
     private void resetHeight()
     {
         if (reset)
         {
             reset = false;
-            transform.position = new Vector3(transform.position.x, 5.75f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, 5.75f, wall.transform.position.z);
         }
     }
     private void OnTriggerEnter(Collider other)

@@ -36,12 +36,14 @@ public class WallController : MonoBehaviour
                 {
                     int tripRand = Random.Range(0, trippleWallType.Length - 1);
                     GameObject wall = Instantiate(trippleWallType[tripRand], new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), Quaternion.identity);
+                    wall.GetComponent<holeController>().SetUpController(this.gameObject);
                     hasSpawned = true;
                 }
                 else
                 {
                     int singRand = Random.Range(0, singleWallType.Length - 1);
-                    Instantiate(singleWallType[singRand], new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), Quaternion.identity);
+                    GameObject wall = Instantiate(singleWallType[singRand], new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), Quaternion.identity);
+                    wall.GetComponent<holeController>().SetUpController(this.gameObject);
                     hasSpawned = true;
                 }
             }
