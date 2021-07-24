@@ -18,6 +18,16 @@ Shader "ClownShader"
 		_RampSmoothing ("Smoothing", Range(0.001,1)) = 0.5
 		[TCP2Separator]
 		
+		[TCP2HeaderHelp(Specular)]
+		[TCP2ColorNoAlpha] _SpecularColor ("Specular Color", Color) = (0.5,0.5,0.5,1)
+		_SpecularShadowAttenuation ("Specular Shadow Attenuation", Float) = 0.25
+		_SpecularToonSize ("Toon Size", Range(0,1)) = 0.25
+		_SpecularToonSmoothness ("Toon Smoothness", Range(0.001,0.5)) = 0.05
+		[TCP2Separator]
+		
+		[TCP2ColorNoAlpha] _DiffuseTint ("Diffuse Tint", Color) = (1,0.5,0,1)
+		[TCP2Separator]
+		
 		[ToggleOff(_RECEIVE_SHADOWS_OFF)] _ReceiveShadowsOff ("Receive Shadows", Float) = 1
 
 		//Avoid compile error if the properties are ending with a drawer
@@ -57,6 +67,11 @@ Shader "ClownShader"
 			fixed4 _BaseColor;
 			float _RampThreshold;
 			float _RampSmoothing;
+			fixed4 _DiffuseTint;
+			float _SpecularToonSize;
+			float _SpecularToonSmoothness;
+			float _SpecularShadowAttenuation;
+			fixed4 _SpecularColor;
 			fixed4 _SColor;
 			fixed4 _HColor;
 		CBUFFER_END
@@ -143,6 +158,7 @@ Shader "ClownShader"
 				// Texture Coordinates
 				output.pack0.xy.xy = input.texcoord0.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
 
+				float3 worldPos = mul(unity_ObjectToWorld, input.vertex).xyz;
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(input.vertex.xyz);
 			#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
 				output.shadowCoord = GetShadowCoord(vertexInput);
@@ -173,6 +189,7 @@ Shader "ClownShader"
 
 				float3 positionWS = input.worldPosAndFog.xyz;
 				float3 normalWS = NormalizeNormalPerPixel(input.normal);
+				half3 viewDirWS = SafeNormalize(GetCameraPositionWS() - positionWS);
 
 				// Shader Properties Sampling
 				float4 __albedo = ( tex2D(_BaseMap, input.pack0.xy).rgba );
@@ -181,6 +198,11 @@ Shader "ClownShader"
 				float __ambientIntensity = ( 1.0 );
 				float __rampThreshold = ( _RampThreshold );
 				float __rampSmoothing = ( _RampSmoothing );
+				float3 __diffuseTint = ( _DiffuseTint.rgb );
+				float __specularToonSize = ( _SpecularToonSize );
+				float __specularToonSmoothness = ( _SpecularToonSmoothness );
+				float __specularShadowAttenuation = ( _SpecularShadowAttenuation );
+				float3 __specularColor = ( _SpecularColor.rgb );
 				float3 __shadowColor = ( _SColor.rgb );
 				float3 __highlightColor = ( _HColor.rgb );
 
@@ -239,9 +261,23 @@ Shader "ClownShader"
 				// apply attenuation
 				ramp *= atten;
 
+				// Diffuse Tint
+				half3 diffuseTint = saturate(__diffuseTint + ndl);
+				ramp *= diffuseTint;
+				
 				half3 color = half3(0,0,0);
 				half3 accumulatedRamp = ramp * max(lightColor.r, max(lightColor.g, lightColor.b));
 				half3 accumulatedColors = ramp * lightColor.rgb;
+
+				//Blinn-Phong Specular
+				half3 h = normalize(lightDir + viewDirWS);
+				float ndh = max(0, dot (normalWS, h));
+				float spec = smoothstep(__specularToonSize + __specularToonSmoothness, __specularToonSize - __specularToonSmoothness,1 - (ndh / (1+__specularToonSmoothness)));
+				spec *= ndl;
+				spec *= saturate(atten * ndl + __specularShadowAttenuation);
+				
+				//Apply specular
+				emission.rgb += spec * lightColor.rgb * __specularColor;
 
 				// Additional lights loop
 			#ifdef _ADDITIONAL_LIGHTS
@@ -266,9 +302,22 @@ Shader "ClownShader"
 					// apply attenuation (shadowmaps & point/spot lights attenuation)
 					ramp *= atten;
 
+					// Diffuse Tint
+					half3 diffuseTint = saturate(__diffuseTint + ndl);
+					ramp *= diffuseTint;
+					
 					accumulatedRamp += ramp * max(lightColor.r, max(lightColor.g, lightColor.b));
 					accumulatedColors += ramp * lightColor.rgb;
 
+					//Blinn-Phong Specular
+					half3 h = normalize(lightDir + viewDirWS);
+					float ndh = max(0, dot (normalWS, h));
+					float spec = smoothstep(__specularToonSize + __specularToonSmoothness, __specularToonSize - __specularToonSmoothness,1 - (ndh / (1+__specularToonSmoothness)));
+					spec *= ndl;
+					spec *= saturate(atten * ndl + __specularShadowAttenuation);
+					
+					//Apply specular
+					emission.rgb += spec * lightColor.rgb * __specularColor;
 				}
 			#endif
 			#ifdef _ADDITIONAL_LIGHTS_VERTEX
@@ -313,7 +362,8 @@ Shader "ClownShader"
 			struct Varyings
 			{
 				float4 positionCS     : SV_POSITION;
-				float2 pack0 : TEXCOORD1; /* pack0.xy = texcoord0 */
+				float3 pack0 : TEXCOORD1; /* pack0.xyz = positionWS */
+				float2 pack1 : TEXCOORD2; /* pack1.xy = texcoord0 */
 			#if defined(DEPTH_ONLY_PASS)
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
@@ -345,7 +395,11 @@ Shader "ClownShader"
 				#endif
 
 				// Texture Coordinates
-				output.pack0.xy.xy = input.texcoord0.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
+				output.pack1.xy.xy = input.texcoord0.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
+
+				float3 worldPos = mul(unity_ObjectToWorld, input.vertex).xyz;
+				VertexPositionInputs vertexInput = GetVertexPositionInputs(input.vertex.xyz);
+				output.pack0.xyz = vertexInput.positionWS;
 
 				#if defined(DEPTH_ONLY_PASS)
 					output.positionCS = TransformObjectToHClip(input.vertex.xyz);
@@ -364,11 +418,14 @@ Shader "ClownShader"
 					UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 				#endif
 
+				float3 positionWS = input.pack0.xyz;
+
 				// Shader Properties Sampling
-				float4 __albedo = ( tex2D(_BaseMap, input.pack0.xy).rgba );
+				float4 __albedo = ( tex2D(_BaseMap, input.pack1.xy).rgba );
 				float4 __mainColor = ( _BaseColor.rgba );
 				float __alpha = ( __albedo.a * __mainColor.a );
 
+				half3 viewDirWS = SafeNormalize(GetCameraPositionWS() - positionWS);
 				half3 albedo = __albedo.rgb;
 				half alpha = __alpha;
 				half3 emission = half3(0,0,0);
@@ -449,5 +506,5 @@ Shader "ClownShader"
 	CustomEditor "ToonyColorsPro.ShaderGenerator.MaterialInspector_SG2"
 }
 
-/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.7.3";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","UNITY_2020_1","TEMPLATE_LWRP"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False);matLayers:list[]) */
-/* TCP_HASH 9794bff32769a83bf386127b9f155214 */
+/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.7.3";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","UNITY_2020_1","DIFFUSE_TINT","SPECULAR","SPECULAR_NO_ATTEN","SPEC_LEGACY","SPECULAR_TOON","TEMPLATE_LWRP"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False);matLayers:list[]) */
+/* TCP_HASH 912c0c2f106e7970b26928930a759019 */
