@@ -5,7 +5,11 @@
     "LoadAllShaders": false,
     "CustomOutputPath": "Shader",
     "LastImplementationExportImportPath": "D:/Users/092019/OneDrive - UP Education/Documents/Git/KiwiJam2021/KiwiJam2021/Assets",
-    "OpenedFoldouts": [],
+    "OpenedFoldouts": [
+        "OPTIONS",
+        "LIGHTING",
+        "SURFACE"
+    ],
     "UseCustomFont": true,
     "CustomFont": {
         "fileID": 12800000,

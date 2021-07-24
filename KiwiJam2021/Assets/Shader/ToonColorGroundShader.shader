@@ -11,12 +11,25 @@ Shader "ToonColorGroundShader"
 		[TCP2ColorNoAlpha] _SColor ("Shadow Color", Color) = (0.2,0.2,0.2,1)
 		_BaseMap ("Albedo", 2D) = "white" {}
 		[TCP2UVScrolling] _BaseMap_SC ("Albedo UV Scrolling", Vector) = (1,1,0,0)
+		[TCP2HeaderHelp(Albedo HSV)]
+		[HideInInspector] __BeginGroup_AlbedoHSV ("Albedo HSV", Float) = 0
+		_HSV_H ("Hue", Range(-180,180)) = 0
+		_HSV_S ("Saturation", Range(-1,1)) = 0
+		_HSV_V ("Value", Range(-1,1)) = 0
+		[HideInInspector] __EndGroup ("Albedo HSV", Float) = 0
 		[TCP2Separator]
 
 		[TCP2Header(Ramp Shading)]
 		
 		_RampThreshold ("Threshold", Range(0.01,1)) = 0.5
 		_RampSmoothing ("Smoothing", Range(0.001,1)) = 0.5
+		[TCP2Separator]
+		
+		[TCP2HeaderHelp(Texture Blending)]
+		[NoScaleOffset] _BlendingSource ("Blending Source", 2D) = "black" {}
+		_BlendTex1 ("Texture 1", 2D) = "white" {}
+		_BlendTex2 ("Texture 2", 2D) = "white" {}
+		_BlendingContrast ("Blending Contrast", Vector) = (1,1,1,0)
 		[TCP2Separator]
 		
 		[ToggleOff(_RECEIVE_SHADOWS_OFF)] _ReceiveShadowsOff ("Receive Shadows", Float) = 1
@@ -49,13 +62,22 @@ Shader "ToonColorGroundShader"
 		// Uniforms
 
 		// Shader Properties
+		sampler2D _BlendingSource;
+		sampler2D _BlendTex1;
+		sampler2D _BlendTex2;
 		sampler2D _BaseMap;
 
 		CBUFFER_START(UnityPerMaterial)
 			
 			// Shader Properties
+			float4 _BlendingContrast;
+			float4 _BlendTex1_ST;
+			float4 _BlendTex2_ST;
 			float4 _BaseMap_ST;
 			half4 _BaseMap_SC;
+			float _HSV_H;
+			float _HSV_S;
+			float _HSV_V;
 			fixed4 _BaseColor;
 			float _RampThreshold;
 			float _RampSmoothing;
@@ -63,6 +85,45 @@ Shader "ToonColorGroundShader"
 			fixed4 _HColor;
 		CBUFFER_END
 
+		//--------------------------------
+		// HSV HELPERS
+		// source: http://lolengine.net/blog/2013/07/27/rgb-to-hsv-in-glsl
+		
+		float3 rgb2hsv(float3 c)
+		{
+			float4 K = float4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+			float4 p = lerp(float4(c.bg, K.wz), float4(c.gb, K.xy), step(c.b, c.g));
+			float4 q = lerp(float4(p.xyw, c.r), float4(c.r, p.yzx), step(p.x, c.r));
+		
+			float d = q.x - min(q.w, q.y);
+			float e = 1.0e-10;
+			return float3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+		}
+		
+		float3 hsv2rgb(float3 c)
+		{
+			c.g = max(c.g, 0.0); //make sure that saturation value is positive
+			float4 K = float4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+			float3 p = abs(frac(c.xxx + K.xyz) * 6.0 - K.www);
+			return c.z * lerp(K.xxx, saturate(p - K.xxx), c.y);
+		}
+		
+		float3 ApplyHSV_3(float3 color, float h, float s, float v)
+		{
+			float3 hsv = rgb2hsv(color.rgb);
+			hsv += float3(h/360,s,v);
+			return hsv2rgb(hsv);
+		}
+		float3 ApplyHSV_3(float color, float h, float s, float v) { return ApplyHSV_3(color.xxx, h, s ,v); }
+		
+		float4 ApplyHSV_4(float4 color, float h, float s, float v)
+		{
+			float3 hsv = rgb2hsv(color.rgb);
+			hsv += float3(h/360,s,v);
+			return float4(hsv2rgb(hsv), color.a);
+		}
+		float4 ApplyHSV_4(float color, float h, float s, float v) { return ApplyHSV_4(color.xxxx, h, s, v); }
+		
 		// Built-in renderer (CG) to SRP (HLSL) bindings
 		#define UnityObjectToClipPos TransformObjectToHClip
 		#define _WorldSpaceLightPos0 _MainLightPosition
@@ -99,6 +160,7 @@ Shader "ToonColorGroundShader"
 			#pragma multi_compile _ SHADOWS_SHADOWMASK
 
 			// -------------------------------------
+			#pragma multi_compile_fog
 
 			//--------------------------------------
 			// GPU Instancing
@@ -113,6 +175,7 @@ Shader "ToonColorGroundShader"
 				float4 vertex       : POSITION;
 				float3 normal       : NORMAL;
 				float4 tangent      : TANGENT;
+				float4 texcoord0 : TEXCOORD0;
 				float4 texcoord1 : TEXCOORD1;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -129,7 +192,8 @@ Shader "ToonColorGroundShader"
 			#ifdef _ADDITIONAL_LIGHTS_VERTEX
 				half3 vertexLights : TEXCOORD2;
 			#endif
-				float2 pack0 : TEXCOORD3; /* pack0.xy = texcoord1 */
+				float4 pack0 : TEXCOORD3; /* pack0.xy = texcoord0  pack0.zw = texcoord1 */
+				float pack1 : TEXCOORD4; /* pack1.x = fogFactor */
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -143,7 +207,8 @@ Shader "ToonColorGroundShader"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
 				// Texture Coordinates
-				output.pack0.xy.xy = input.texcoord1.xy + frac(_Time.yy * _BaseMap_SC.xy);
+				output.pack0.xy = input.texcoord0.xy;
+				output.pack0.zw.xy = input.texcoord1.xy + frac(_Time.yy * _BaseMap_SC.xy);
 
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(input.vertex.xyz);
 			#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
@@ -158,6 +223,9 @@ Shader "ToonColorGroundShader"
 
 				// world position
 				output.worldPosAndFog = float4(vertexInput.positionWS.xyz, 0);
+
+				// Computes fog factor per-vertex
+				output.worldPosAndFog.w = ComputeFogFactor(vertexInput.positionCS.z);
 
 				// normal
 				output.normal = NormalizeNormalPerVertex(vertexNormalInput.normalWS);
@@ -177,19 +245,42 @@ Shader "ToonColorGroundShader"
 				float3 normalWS = NormalizeNormalPerPixel(input.normal);
 
 				// Shader Properties Sampling
-				float4 __albedo = ( tex2D(_BaseMap, input.pack0.xy * _BaseMap_ST.xy + _BaseMap_ST.zw).rgba );
+				float4 __blendingSource = ( tex2D(_BlendingSource, input.pack0.xy).rgba );
+				float4 __blendingContrast = ( _BlendingContrast.xyzw );
+				float4 __blendTexture1 = ( tex2D(_BlendTex1, input.pack0.xy * _BlendTex1_ST.xy + _BlendTex1_ST.zw).rgba );
+				float4 __blendTexture2 = ( tex2D(_BlendTex2, input.pack0.xy * _BlendTex2_ST.xy + _BlendTex2_ST.zw).rgba );
+				float4 __albedo = ( tex2D(_BaseMap, input.pack0.zw * _BaseMap_ST.xy + _BaseMap_ST.zw).rgba );
 				float4 __mainColor = ( _BaseColor.rgba );
 				float __alpha = ( __albedo.a * __mainColor.a );
+				float __albedoHue = ( _HSV_H );
+				float __albedoSaturation = ( _HSV_S );
+				float __albedoValue = ( _HSV_V );
 				float __ambientIntensity = ( 1.0 );
 				float __rampThreshold = ( _RampThreshold );
 				float __rampSmoothing = ( _RampSmoothing );
 				float3 __shadowColor = ( _SColor.rgb );
 				float3 __highlightColor = ( _HColor.rgb );
 
+				// Texture Blending: initialize
+				fixed4 blendingSource = __blendingSource;
+				blendingSource.rgba = saturate(normalize(blendingSource.rgba) * dot(__blendingContrast, blendingSource.rgba));
+				fixed4 tex1 = __blendTexture1;
+				fixed4 tex2 = __blendTexture2;
+
 				// main texture
 				half3 albedo = __albedo.rgb;
 				half alpha = __alpha;
 				half3 emission = half3(0,0,0);
+				half4 albedoAlpha = half4(albedo, alpha);
+				
+				// Texture Blending: sample
+				albedoAlpha = lerp(albedoAlpha, tex1, blendingSource.r);
+				albedoAlpha = lerp(albedoAlpha, tex2, blendingSource.g);
+				albedo = albedoAlpha.rgb;
+				alpha = albedoAlpha.a;
+				
+				//Albedo HSV
+				albedo = ApplyHSV_3(albedo, __albedoHue, __albedoSaturation, __albedoValue);
 				
 				albedo *= __mainColor.rgb;
 
@@ -286,6 +377,10 @@ Shader "ToonColorGroundShader"
 				color += indirectDiffuse;
 
 				color += emission;
+
+				// Mix the pixel color with fogColor. You can optionally use MixFogColor to override the fogColor with a custom one.
+				float fogFactor = input.worldPosAndFog.w;
+				color = MixFog(color, fogFactor);
 
 				return half4(color, alpha);
 			}
@@ -451,5 +546,5 @@ Shader "ToonColorGroundShader"
 	CustomEditor "ToonyColorsPro.ShaderGenerator.MaterialInspector_SG2"
 }
 
-/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.7.3";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","UNITY_2020_1","TEMPLATE_LWRP"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[sp(name:"Albedo";imps:list[imp_mp_texture(uto:True;tov:"";tov_lbl:"";gto:False;sbt:False;scr:True;scv:"";scv_lbl:"";gsc:True;roff:False;goff:True;sin_anm:False;sin_anmv:"";sin_anmv_lbl:"";gsin:True;notile:False;triplanar_local:False;def:"white";locked_uv:False;uv:1;cc:4;chan:"RGBA";mip:-1;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:Texcoord;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_BaseMap";md:"";gbv:False;custom:False;refs:"";guid:"d5f3ccb0-e112-4d63-8cb8-c08bc5b48eb2";op:Multiply;lbl:"Albedo";gpu_inst:False;locked:False;impl_index:0)];layers:list[];unlocked:list[];clones:dict[];isClone:False)];customTextures:list[ct(cimp:imp_mp_vector(def:(0, 0, 0, 0);fp:float;cc:4;chan:"XYZW";prop:"_MyVector";md:"";gbv:False;custom:True;refs:"";guid:"57680023-49cd-438f-a726-9e5b31702d93";op:Multiply;lbl:"My Vector";gpu_inst:False;locked:False;impl_index:-1);exp:True;uv_exp:False;imp_lbl:"Vector")];codeInjection:codeInjection(injectedFiles:list[];mark:False);matLayers:list[]) */
-/* TCP_HASH 8412b97b08681ad545c20208363dfe84 */
+/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.7.3";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","UNITY_2020_1","FOG","TEMPLATE_LWRP","ALBEDO_HSV","TEXTURE_BLENDING","TEXBLEND_LINEAR","BLEND_TEX1","BLEND_TEX2","TEXBLEND_NORMALIZE"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0",BLEND_TEX1_CHNL="r",BLEND_TEX2_CHNL="g"];shaderProperties:list[sp(name:"Albedo";imps:list[imp_mp_texture(uto:True;tov:"";tov_lbl:"";gto:False;sbt:False;scr:True;scv:"";scv_lbl:"";gsc:True;roff:False;goff:True;sin_anm:False;sin_anmv:"";sin_anmv_lbl:"";gsin:True;notile:False;triplanar_local:False;def:"white";locked_uv:False;uv:1;cc:4;chan:"RGBA";mip:-1;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:Texcoord;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_BaseMap";md:"";gbv:False;custom:False;refs:"";guid:"d5f3ccb0-e112-4d63-8cb8-c08bc5b48eb2";op:Multiply;lbl:"Albedo";gpu_inst:False;locked:False;impl_index:0)];layers:list[];unlocked:list[];clones:dict[];isClone:False)];customTextures:list[ct(cimp:imp_mp_vector(def:(0, 0, 0, 0);fp:float;cc:4;chan:"XYZW";prop:"_MyVector";md:"";gbv:False;custom:True;refs:"";guid:"57680023-49cd-438f-a726-9e5b31702d93";op:Multiply;lbl:"My Vector";gpu_inst:False;locked:False;impl_index:-1);exp:True;uv_exp:False;imp_lbl:"Vector")];codeInjection:codeInjection(injectedFiles:list[];mark:False);matLayers:list[]) */
+/* TCP_HASH bfd05ba2f0bd9c03e8a2548a27dfc89c */

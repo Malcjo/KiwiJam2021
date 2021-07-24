@@ -49,8 +49,20 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 3eda0c4754885564f9df920405499055, type: 3}
-        m_Scale: {x: 10, y: 10}
+        m_Texture: {fileID: 2800000, guid: 8ee1a3037ddd9a44cb1f7b9898c83e84, type: 3}
+        m_Scale: {x: 30, y: 30}
+        m_Offset: {x: 0, y: 0}
+    - _BlendTex1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BlendTex2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BlendingSource:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
@@ -124,6 +136,9 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _HSV_H: 0
+    - _HSV_S: 0
+    - _HSV_V: 0.1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _QueueOffset: 0
@@ -138,6 +153,8 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
+    - __BeginGroup_AlbedoHSV: 1
+    - __EndGroup: 0
     - __dummy__: 0
     m_Colors:
     - Color_13966541: {r: 0.41921002, g: 0.6698113, b: 0.18054211, a: 1}
@@ -150,8 +167,9 @@ Material:
     - Color_C57BD8C4: {r: 0.09764532, g: 0.2830189, b: 0.1431757, a: 0}
     - Color_DD18F21F: {r: 0, g: 0, b: 0, a: 0}
     - Color_FF5F73C2: {r: 0.520459, g: 0.8301887, b: 0.2237705, a: 1}
-    - _BaseColor: {r: 0.26967648, g: 0.6698113, b: 0.19318008, a: 1}
+    - _BaseColor: {r: 0.3256454, g: 0.6415094, b: 0.12406549, a: 1}
     - _BaseMap_SC: {r: 0.01095, g: 0, b: 0, a: 0}
+    - _BlendingContrast: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 1, g: 1, b: 1, a: 1}
