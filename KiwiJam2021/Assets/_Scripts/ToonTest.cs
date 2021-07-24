@@ -11,13 +11,13 @@ public class ToonTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        test.material.SetVector("_BaseMap_SC", new Vector4(0.01f, 0, 0, 0));
+
         
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        test.material.SetVector("_BaseMap_SC", new Vector4(0.01f + 1 * Time.deltaTime, 0, 0, 0));
     }
 }
