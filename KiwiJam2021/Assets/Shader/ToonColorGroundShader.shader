@@ -113,7 +113,7 @@ Shader "ToonColorGroundShader"
 				float4 vertex       : POSITION;
 				float3 normal       : NORMAL;
 				float4 tangent      : TANGENT;
-				float4 texcoord0 : TEXCOORD0;
+				float4 texcoord1 : TEXCOORD1;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -129,7 +129,7 @@ Shader "ToonColorGroundShader"
 			#ifdef _ADDITIONAL_LIGHTS_VERTEX
 				half3 vertexLights : TEXCOORD2;
 			#endif
-				float2 pack0 : TEXCOORD3; /* pack0.xy = texcoord0 */
+				float2 pack0 : TEXCOORD3; /* pack0.xy = texcoord1 */
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -143,7 +143,7 @@ Shader "ToonColorGroundShader"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
 				// Texture Coordinates
-				output.pack0.xy.xy = input.texcoord0.xy + frac(_Time.yy * _BaseMap_SC.xy);
+				output.pack0.xy.xy = input.texcoord1.xy + frac(_Time.yy * _BaseMap_SC.xy);
 
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(input.vertex.xyz);
 			#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
@@ -308,14 +308,14 @@ Shader "ToonColorGroundShader"
 			{
 				float4 vertex   : POSITION;
 				float3 normal   : NORMAL;
-				float4 texcoord0 : TEXCOORD0;
+				float4 texcoord1 : TEXCOORD1;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
 			struct Varyings
 			{
 				float4 positionCS     : SV_POSITION;
-				float2 pack0 : TEXCOORD1; /* pack0.xy = texcoord0 */
+				float2 pack0 : TEXCOORD1; /* pack0.xy = texcoord1 */
 			#if defined(DEPTH_ONLY_PASS)
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
@@ -347,7 +347,7 @@ Shader "ToonColorGroundShader"
 				#endif
 
 				// Texture Coordinates
-				output.pack0.xy.xy = input.texcoord0.xy + frac(_Time.yy * _BaseMap_SC.xy);
+				output.pack0.xy.xy = input.texcoord1.xy + frac(_Time.yy * _BaseMap_SC.xy);
 
 				#if defined(DEPTH_ONLY_PASS)
 					output.positionCS = TransformObjectToHClip(input.vertex.xyz);
@@ -451,5 +451,5 @@ Shader "ToonColorGroundShader"
 	CustomEditor "ToonyColorsPro.ShaderGenerator.MaterialInspector_SG2"
 }
 
-/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.7.3";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","UNITY_2020_1","TEMPLATE_LWRP"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[sp(name:"Albedo";imps:list[imp_mp_texture(uto:True;tov:"";tov_lbl:"";gto:False;sbt:False;scr:True;scv:"";scv_lbl:"";gsc:True;roff:False;goff:True;sin_anm:False;sin_anmv:"";sin_anmv_lbl:"";gsin:True;notile:False;triplanar_local:False;def:"white";locked_uv:False;uv:0;cc:4;chan:"RGBA";mip:-1;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:Texcoord;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_BaseMap";md:"";gbv:False;custom:False;refs:"";guid:"d5f3ccb0-e112-4d63-8cb8-c08bc5b48eb2";op:Multiply;lbl:"Albedo";gpu_inst:False;locked:False;impl_index:0)];layers:list[];unlocked:list[];clones:dict[];isClone:False)];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False);matLayers:list[]) */
-/* TCP_HASH a4ff769406063a3a207174039c1a4fd6 */
+/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.7.3";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","UNITY_2020_1","TEMPLATE_LWRP"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[sp(name:"Albedo";imps:list[imp_mp_texture(uto:True;tov:"";tov_lbl:"";gto:False;sbt:False;scr:True;scv:"";scv_lbl:"";gsc:True;roff:False;goff:True;sin_anm:False;sin_anmv:"";sin_anmv_lbl:"";gsin:True;notile:False;triplanar_local:False;def:"white";locked_uv:False;uv:1;cc:4;chan:"RGBA";mip:-1;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:Texcoord;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_BaseMap";md:"";gbv:False;custom:False;refs:"";guid:"d5f3ccb0-e112-4d63-8cb8-c08bc5b48eb2";op:Multiply;lbl:"Albedo";gpu_inst:False;locked:False;impl_index:0)];layers:list[];unlocked:list[];clones:dict[];isClone:False)];customTextures:list[ct(cimp:imp_mp_vector(def:(0, 0, 0, 0);fp:float;cc:4;chan:"XYZW";prop:"_MyVector";md:"";gbv:False;custom:True;refs:"";guid:"57680023-49cd-438f-a726-9e5b31702d93";op:Multiply;lbl:"My Vector";gpu_inst:False;locked:False;impl_index:-1);exp:True;uv_exp:False;imp_lbl:"Vector")];codeInjection:codeInjection(injectedFiles:list[];mark:False);matLayers:list[]) */
+/* TCP_HASH 8412b97b08681ad545c20208363dfe84 */
