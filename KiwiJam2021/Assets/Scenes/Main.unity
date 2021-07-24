@@ -635,6 +635,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backGroundTilePrefabs:
   - {fileID: 4218196666634638475, guid: 939460e22c13b884897fec9899450a27, type: 3}
+  - {fileID: 4218196666634638475, guid: d3a97c381e8c8ee48ba1699cf5598008, type: 3}
   spawnPoint: {fileID: 496276549}
 --- !u!4 &294461777
 Transform:
