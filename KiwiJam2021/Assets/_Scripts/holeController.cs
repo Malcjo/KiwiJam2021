@@ -9,6 +9,7 @@ public class holeController : MonoBehaviour
     private int fallSpeed;
     [SerializeField] private int speed;
     private bool reset = true;
+    WallController controller;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -34,6 +35,10 @@ public class holeController : MonoBehaviour
         {
             rb.velocity = new Vector3(0, 0, -speed) * Time.deltaTime;
         }
+    }
+    public void SetUpController(WallController wallController)
+    {
+        controller = wallController;
     }
     private void resetHeight()
     {

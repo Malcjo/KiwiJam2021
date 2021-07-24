@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
     //0 = left, 1 = mid, 2 = right
     [SerializeField] bool tripleMovement;
 
-    [SerializeField] GameObject[] groupPoses;
     [SerializeField] Animator anim;
 
     private void Start()

@@ -6,7 +6,7 @@ public class WallController : MonoBehaviour
 {
 
     private Rigidbody rb;
-    private bool entrace = true;
+    [SerializeField] private bool entrance = true;
     private int fallSpeed;
     [SerializeField] private int speed;
     private bool reset = true;
@@ -15,6 +15,7 @@ public class WallController : MonoBehaviour
     [SerializeField] bool trippleMovement;
     bool hasSpawned = false;
     [SerializeField] float counter;
+    
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -29,12 +30,12 @@ public class WallController : MonoBehaviour
         counter += 1 * Time.deltaTime;
         if (!hasSpawned)
         {
-            if (counter > 1f)
+            if (counter > 0.1f)
             {
                 if (trippleMovement)
                 {
                     int tripRand = Random.Range(0, trippleWallType.Length - 1);
-                    Instantiate(trippleWallType[tripRand], new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), Quaternion.identity);
+                    GameObject wall = Instantiate(trippleWallType[tripRand], new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), Quaternion.identity);
                     hasSpawned = true;
                 }
                 else
@@ -48,18 +49,20 @@ public class WallController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if(transform.position.y <= 5.75f)
+        if(transform.position.y <= 8f)
         {
             resetHeight();
-            entrace = false;
+            entrance = false;
             fallSpeed = 0;
         }
-        if (entrace)
+        if (entrance)
         {
+            print("falling");
             rb.velocity = new Vector3(0, -fallSpeed, -speed) * Time.deltaTime;
         }
         else
         {
+            print("not falling");
             rb.velocity = new Vector3(0, 0, -speed) * Time.deltaTime;
         }
     }
@@ -68,7 +71,7 @@ public class WallController : MonoBehaviour
         if (reset)
         {
             reset = false;
-            transform.position = new Vector3(transform.position.x, 5.75f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, 8, transform.position.z);
         }
     }
     private void OnTriggerEnter(Collider other)
