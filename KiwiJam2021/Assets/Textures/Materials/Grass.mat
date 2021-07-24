@@ -21,18 +21,29 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Grass
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 2f8d500760ecdf440b5eee8f6d9a02b7, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_1CF44DD8:
+        m_Texture: {fileID: 2800000, guid: 405007e2fbb1c314693dc1f5bf90babd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_5BCB1167:
+        m_Texture: {fileID: 2800000, guid: 3eda0c4754885564f9df920405499055, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_DDC75A4A:
+        m_Texture: {fileID: 2800000, guid: 3eda0c4754885564f9df920405499055, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
@@ -57,11 +68,44 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2DLOD_A050BC68_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 3eda0c4754885564f9df920405499055, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_2E670FCE_Out_0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_28D287DC: 3
+    - Vector1_39277DFB: 0.3
+    - Vector1_3A7CFCC: 0
+    - Vector1_41D7F81B: 2
+    - Vector1_457C9AA5: 0.6
+    - Vector1_476B07D0: 0
+    - Vector1_5C021DC1: 0.5
+    - Vector1_72070197: 0.44
+    - Vector1_77C7DB1D: 1
+    - Vector1_7B39CAD0: -44.02
+    - Vector1_7DDD0C5F: 0.3
+    - Vector1_7EF99DF9: 1
+    - Vector1_839B7914: 0.05
+    - Vector1_9BC750AE: 1
+    - Vector1_A141C58B: 40
+    - Vector1_A391AFC4: 3
+    - Vector1_AA0ADF88: 1
+    - Vector1_ADB196EA: 0
+    - Vector1_C4722B7C: 0
+    - Vector1_C56E5EA: 10
+    - Vector1_CAE078CF: 0
+    - Vector1_CBB7799C: 1
+    - Vector1_D7A43C6F: 0
+    - Vector1_E9502BBB: 0
+    - Vector1_F104477C: 1344
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -84,6 +128,14 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_13966541: {r: 0.11764707, g: 0.56078434, b: 0.30980393, a: 1}
+    - Color_16EF1208: {r: 1, g: 1, b: 1, a: 0}
+    - Color_1DF9E9ED: {r: 0, g: 0.4474953, b: 0.8962264, a: 0}
+    - Color_7F087F7B: {r: 0.9150943, g: 0.867613, b: 0.867613, a: 0}
+    - Color_8A477D84: {r: 1, g: 1, b: 1, a: 0}
+    - Color_A8E3C850: {r: 0, g: 0, b: 0, a: 0}
+    - Color_DD18F21F: {r: 0, g: 0, b: 0, a: 0}
+    - Color_FF5F73C2: {r: 0.520459, g: 0.8301887, b: 0.2237705, a: 1}
     - _BaseColor: {r: 0.23520845, g: 0.38679248, b: 0.20616768, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
