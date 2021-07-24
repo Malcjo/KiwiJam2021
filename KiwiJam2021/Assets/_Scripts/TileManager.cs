@@ -9,7 +9,7 @@ public class TileManager : MonoBehaviour
     private Transform playerTransform;
     private float spawnZ = 0.0f;
     private float tileLength = 10;
-    int amountTilesOnSceen = 11;
+    private int amountTilesOnSceen = 15;
     [SerializeField] Transform spawnPoint;
     int random;
 
@@ -17,14 +17,14 @@ public class TileManager : MonoBehaviour
     {
         for(int i = 0; i < amountTilesOnSceen; i++)
         {
-            random = Random.Range(0, backGroundTilePrefabs.Length - 1);
+            //random = Random.Range(0, backGroundTilePrefabs.Length - 1);
             SpawnTile();
         }
     }
     public void SpawnTile(int prefabIndex = -1)
     {
         GameObject go;
-        go = Instantiate(backGroundTilePrefabs[random]) as GameObject;
+        go = Instantiate(backGroundTilePrefabs[0]) as GameObject;
         go.transform.SetParent(transform);
         Vector3 newPos = new Vector3(0, 0, 1) * spawnZ;
         newPos = new Vector3(spawnPoint.position.x, spawnPoint.position.y, newPos.z);

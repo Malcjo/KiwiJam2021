@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] bool tripleMovement;
 
     [SerializeField] Animator anim;
+    private bool isKeyPressed = false;
 
     private void Start()
     {
@@ -32,9 +33,16 @@ public class Player : MonoBehaviour
 
     private void PlayerInputs()
     {
+        
         if (Input.GetKey(KeyCode.A))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.B))
         {
@@ -126,7 +134,13 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.X))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("X");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.Y))
         {
@@ -136,6 +150,8 @@ public class Player : MonoBehaviour
         {
             anim.Play("BPose");
         }
+        anim.Play("IDLE");
+        isKeyPressed = false;
     }
 
     public void setPosInput()
