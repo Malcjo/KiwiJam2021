@@ -10,6 +10,11 @@ public class WallController : MonoBehaviour
     private int fallSpeed;
     [SerializeField] private int speed;
     private bool reset = true;
+    [SerializeField] GameObject[] trippleWallType;
+    [SerializeField] GameObject[] singleWallType;
+    [SerializeField] bool trippleMovement;
+    bool hasSpawned = false;
+    [SerializeField] float counter;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -18,6 +23,28 @@ public class WallController : MonoBehaviour
     {
         speed = WallSpawner.TrainSpeed;
         fallSpeed = 2500;
+    }
+    private void Update()
+    {
+        counter += 1 * Time.deltaTime;
+        if (!hasSpawned)
+        {
+            if (counter > 1f)
+            {
+                if (trippleMovement)
+                {
+                    int tripRand = Random.Range(0, trippleWallType.Length - 1);
+                    Instantiate(trippleWallType[tripRand], new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), Quaternion.identity);
+                    hasSpawned = true;
+                }
+                else
+                {
+                    int singRand = Random.Range(0, singleWallType.Length - 1);
+                    Instantiate(singleWallType[singRand], new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), Quaternion.identity);
+                    hasSpawned = true;
+                }
+            }
+        }
     }
     private void FixedUpdate()
     {
@@ -35,8 +62,6 @@ public class WallController : MonoBehaviour
         {
             rb.velocity = new Vector3(0, 0, -speed) * Time.deltaTime;
         }
-
-
     }
     private void resetHeight()
     {

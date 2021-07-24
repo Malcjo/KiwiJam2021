@@ -9,210 +9,133 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform leftPos, leftMid, midPos, rightPos, rightMid;
     [SerializeField] private int pos;
     //0 = left, 1 = mid, 2 = right
+    [SerializeField] bool tripleMovement;
 
     [SerializeField] GameObject[] groupPoses;
     [SerializeField] Animator anim;
 
     private void Start()
     {
-        //groupPoses[0].SetActive(true);
+        anim.Play("IPose");
     }
     void Update()
     {
-        anim.SetTrigger("IPose");
-        setPosInput();
-        MoveCharacter();
         PlayerInputs();
-
+        if (tripleMovement)
+        {
+            setPosInput();
+            MoveCharacter();
+        }
 
     }
-    private void SetPose(int obj, bool onOff)
-    {
-        groupPoses[obj].SetActive(onOff);
-    }
+
+
+
     private void PlayerInputs()
     {
-        resetMesh();
-        int keyNumber;
         if (Input.GetKey(KeyCode.A))
         {
-            //keyNumber = (int)keys.A;
-            //SetPose(keyNumber, true);
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.B))
         {
-            //keyNumber = (int)keys.B;
-            //SetPose(keyNumber, true);
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.C))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.D))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.E))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.F))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.G))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.H))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.I))
         {
-            anim.SetTrigger("IPose");
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.J))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.K))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.L))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.M))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.N))
         {
-            anim.SetTrigger("NPose");
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.O))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.P))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.Q))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.R))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.S))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.T))
         {
-            anim.SetTrigger("TPose");
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.U))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.V))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.W))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.X))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.Y))
         {
-
+            anim.Play("BPose");
         }
         if (Input.GetKey(KeyCode.Z))
         {
-
-        }
-
-        foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
-        {
-            if (Input.GetKey(vKey))
-            {
-
-
-                switch (vKey)
-                {
-                    case KeyCode.A:
-
-                        break;
-                    case KeyCode.B:
-
-                        break;
-                    case KeyCode.C:
-                        keyNumber = (int)keys.C;
-                        SetPose(keyNumber, true);
-                        break;
-                    case KeyCode.D:
-                        keyNumber = (int)keys.D;
-                        SetPose(keyNumber, true);
-                        break;
-                    case KeyCode.E:
-                        SetPose(4, true);
-                        break;
-                    case KeyCode.F:
-                        SetPose(5, true);
-                        break;
-                    case KeyCode.G:
-                        break;
-                    case KeyCode.H:
-                        break;
-                    case KeyCode.I:
-                        break;
-                    case KeyCode.J:
-                        break;
-                    case KeyCode.K:
-                        break;
-                    case KeyCode.L:
-                        break;
-                    case KeyCode.M:
-                        break;
-                    case KeyCode.N:
-                        break;
-                    case KeyCode.O:
-                        break;
-                    case KeyCode.P:
-                        break;
-                    case KeyCode.Q:
-                        break;
-                    case KeyCode.R:
-                        break;
-                    case KeyCode.S:
-                        break;
-                    case KeyCode.T:
-                        break;
-                    case KeyCode.U:
-                        break;
-                    case KeyCode.V:
-                        break;
-                    case KeyCode.W:
-                        break;
-                    case KeyCode.X:
-                        break;
-                    case KeyCode.Y:
-                        break;
-                    case KeyCode.Z:
-                        break;
-                }
-            }
+            anim.Play("BPose");
         }
     }
 
@@ -242,7 +165,7 @@ public class Player : MonoBehaviour
         switch (pos)
         {
             case -1:
-                transform.position = new Vector3(leftPos.position.x, leftPos.position.y ,0);
+                transform.position = new Vector3(leftPos.position.x, leftPos.position.y, 0);
                 break;
             case 0:
                 transform.position = new Vector3(midPos.position.x, midPos.position.y, 0);
@@ -252,11 +175,34 @@ public class Player : MonoBehaviour
                 break;
         }
     }
-    private void resetMesh()
-    {
-        foreach(GameObject poses in groupPoses)
-        {
-            poses.SetActive(false);
-        }
-    }
+    //private void resetMesh()
+    //{
+    //    anim.SetBool("APose", false);
+    //    anim.SetBool("BPose", false);
+    //    anim.SetBool("CPose", false);
+    //    anim.SetBool("DPose", false);
+    //    anim.SetBool("EPose", false);
+    //    anim.SetBool("FPose", false);
+    //    anim.SetBool("GPose", false);
+    //    anim.SetBool("HPose", false);
+    //    anim.SetBool("IPose", false);
+    //    anim.SetBool("JPose", false);
+    //    anim.SetBool("KPose", false);
+    //    anim.SetBool("LPose", false);
+    //    anim.SetBool("MPose", false);
+    //    anim.SetBool("NPose", false);
+    //    anim.SetBool("OPose", false);
+    //    anim.SetBool("PPose", false);
+    //    anim.SetBool("QPose", false);
+    //    anim.SetBool("RPose", false);
+    //    anim.SetBool("SPose", false);
+    //    anim.SetBool("TPose", false);
+    //    anim.SetBool("UPose", false);
+    //    anim.SetBool("VPose", false);
+    //    anim.SetBool("WPose", false);
+    //    anim.SetBool("XPose", false);
+    //    anim.SetBool("YPose", false);
+    //    anim.SetBool("ZPose", false);
+    //}
 }
+
