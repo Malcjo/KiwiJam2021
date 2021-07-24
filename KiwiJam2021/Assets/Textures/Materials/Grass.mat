@@ -167,7 +167,7 @@ Material:
     - Color_C57BD8C4: {r: 0.09764532, g: 0.2830189, b: 0.1431757, a: 0}
     - Color_DD18F21F: {r: 0, g: 0, b: 0, a: 0}
     - Color_FF5F73C2: {r: 0.520459, g: 0.8301887, b: 0.2237705, a: 1}
-    - _BaseColor: {r: 0.3256454, g: 0.6415094, b: 0.12406549, a: 1}
+    - _BaseColor: {r: 0.23819576, g: 0.6226415, b: 0.13803844, a: 1}
     - _BaseMap_SC: {r: 0.01095, g: 0, b: 0, a: 0}
     - _BlendingContrast: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
