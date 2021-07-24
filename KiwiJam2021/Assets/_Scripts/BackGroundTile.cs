@@ -33,6 +33,8 @@ public class BackGroundTile : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    // times 1000 value by 0.1
+    //texture size 10, 10
     //  100	        300	    500	    1000 	2000	7500
     //   0.00365	0.01095	0.01825	0.0365  0.073	0.27375
 }
