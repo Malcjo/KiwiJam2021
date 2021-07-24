@@ -20,16 +20,14 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        moveCounter -= 1 * Time.deltaTime;
         PlayerInputs();
         if (tripleMovement)
         {
             setPosInput();
             MoveCharacter();
         }
-
     }
-
-
 
     private void PlayerInputs()
     {
@@ -46,91 +44,223 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.B))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.C))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.E))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.F))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.G))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.H))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.I))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.J))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.K))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.L))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.M))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.N))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.O))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.P))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.Q))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.R))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.T))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.U))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.V))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.W))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.X))
         {
@@ -144,49 +274,105 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Y))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         if (Input.GetKey(KeyCode.Z))
         {
-            anim.Play("BPose");
+            if (isKeyPressed)
+            {
+                return;
+            }
+            anim.Play("A");
+            isKeyPressed = true;
+            return;
         }
         anim.Play("IDLE");
         isKeyPressed = false;
     }
 
+    private int previousPos;
     public void setPosInput()
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             pos -= 1;
+            moveCounter = 0.2f;
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             pos += 1;
+            moveCounter = 0.2f;
         }
 
         if (pos < -1)
         {
+            previousPos = -1;
             pos = -1;
         }
         if (pos > 1)
         {
+            previousPos = 1;
             pos = 1;
         }
-    }
 
+    }
+    private float moveCounter;
     private void MoveCharacter()
     {
         switch (pos)
         {
             case -1:
-                transform.position = new Vector3(leftPos.position.x, leftPos.position.y, 0);
+                previousPos = -1;
+                if (moveCounter > 0)
+                {
+                    transform.position = new Vector3(leftMid.position.x, leftMid.position.y, 0);
+                }
+                else if (moveCounter <= 0)
+                {
+                    transform.position = new Vector3(leftPos.position.x, leftPos.position.y, 0);
+                }
                 break;
             case 0:
-                transform.position = new Vector3(midPos.position.x, midPos.position.y, 0);
+                switch (previousPos)
+                {
+                    case -1:
+                        if (moveCounter > 0)
+                        {
+                            transform.position = new Vector3(leftMid.position.x, leftMid.position.y, 0);
+                        }
+                        else if (moveCounter <= 0)
+                        {
+                            transform.position = new Vector3(midPos.position.x, midPos.position.y, 0);
+                        }
+                        break;
+                    case 1:
+                        if (moveCounter > 0)
+                        {
+                            transform.position = new Vector3(rightMid.position.x, rightMid.position.y, 0);
+                        }
+                        else if (moveCounter <= 0)
+                        {
+                            transform.position = new Vector3(midPos.position.x, midPos.position.y, 0);
+                        }
+                        break;
+                }
                 break;
             case 1:
-                transform.position = new Vector3(rightPos.position.x, rightPos.position.y, 0);
+                previousPos = 1;
+                if (moveCounter > 0)
+                {
+                    transform.position = new Vector3(rightMid.position.x, rightMid.position.y, 0);
+                }
+                else if (moveCounter <= 0)
+                {
+                    transform.position = new Vector3(rightPos.position.x, rightPos.position.y, 0);
+                }
                 break;
         }
     }
