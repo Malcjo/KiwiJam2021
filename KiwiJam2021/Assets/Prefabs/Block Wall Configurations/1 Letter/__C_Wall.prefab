@@ -310,6 +310,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2706571708245737940}
     m_Modifications:
+    - target: {fileID: 4208829794623769884, guid: 9dcc80319db2b7e4399cbfba9d75c53f, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5980017018085138162, guid: 9dcc80319db2b7e4399cbfba9d75c53f, type: 3}
       propertyPath: m_Name
       value: C_Block (1)

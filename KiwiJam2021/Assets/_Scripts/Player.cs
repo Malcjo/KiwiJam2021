@@ -277,7 +277,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("X");
+            anim.Play("Y");
             isKeyPressed = true;
             return;
         }
@@ -287,7 +287,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("Y");
+            anim.Play("X");
             isKeyPressed = true;
             return;
         }

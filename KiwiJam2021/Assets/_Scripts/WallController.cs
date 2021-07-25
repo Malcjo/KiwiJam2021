@@ -33,7 +33,7 @@ public class WallController : MonoBehaviour
         counter += 1 * Time.deltaTime;
         if (!hasSpawned)
         {
-            if (counter > 0.1f)
+            if (counter > 0.05f)
             {
                 int tripRand = Random.Range(0, singleMode.Length - 1);
                 GameObject wall = Instantiate(singleMode[GameManager.Instance.index], new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), Quaternion.identity);
