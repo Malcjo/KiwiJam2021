@@ -17,8 +17,10 @@ public class WallController : MonoBehaviour
     [SerializeField] bool trippleMovement;
     bool hasSpawned = false;
     [SerializeField] float counter;
+    [SerializeField] GameObject gm;
     private void Awake()
     {
+        gm = GameObject.FindGameObjectWithTag("GameManager");
         rb = GetComponent<Rigidbody>();
     }
     private void Start()
@@ -90,12 +92,12 @@ public class WallController : MonoBehaviour
         if (entrance)
         {
             print("falling");
-            rb.velocity = new Vector3(0, -fallSpeed, -speed) * Time.deltaTime;
+            rb.velocity = new Vector3(0, -fallSpeed, -GameManager.Instance.wallSpeed) * Time.deltaTime;
         }
         else
         {
             print("not falling");
-            rb.velocity = new Vector3(0, 0, -speed) * Time.deltaTime;
+            rb.velocity = new Vector3(0, 0, -GameManager.Instance.wallSpeed) * Time.deltaTime;
         }
     }
     private void resetHeight()

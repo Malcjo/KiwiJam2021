@@ -7,7 +7,11 @@ public class BackGroundTile : MonoBehaviour
     [SerializeField] GameObject[] tile;
     [SerializeField] Transform spawnPoint;
     [SerializeField] GameObject manager;
+    [SerializeField] GameManager gm;
     Rigidbody rb;
+    private void Awake()
+    {
+    }
     private void Start()
     {
         manager = GameObject.FindGameObjectWithTag("TileManager");
@@ -17,10 +21,9 @@ public class BackGroundTile : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        rb.velocity = (-Vector3.forward * 300) * Time.deltaTime;
-
-
+        rb.velocity = (-Vector3.forward * GameManager.Instance.treeSpeed) * Time.deltaTime;
     }
+    
     private void Update()
     {
         //transform.position -= new Vector3(0,0,0.14f);

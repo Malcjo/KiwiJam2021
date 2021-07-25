@@ -364,19 +364,19 @@ public class Player : MonoBehaviour
                         }
                         else if (moveCounter <= 0)
                         {
-                            transform.position = new Vector3(midPos.position.x, midPos.position.y, 0);
+                            transform.position = new Vector3(midPos.position.x, midPos.position.y, midPos.position.z);
                             rightAnim = false;
                         }
                         break;
                     case 1:
                         if (moveCounter > 0)
                         {
-                            transform.position = new Vector3(rightMid.position.x, rightMid.position.y, 0);
+                            transform.position = new Vector3(rightMid.position.x, rightMid.position.y, rightMid.position.z);
                             leftAnim = true;
                         }
                         else if (moveCounter <= 0)
                         {
-                            transform.position = new Vector3(midPos.position.x, midPos.position.y, 0);
+                            transform.position = new Vector3(midPos.position.x, midPos.position.y, midPos.position.z);
                             leftAnim = false;
                         }
                         break;
@@ -386,12 +386,12 @@ public class Player : MonoBehaviour
                 previousPos = 1;
                 if (moveCounter > 0)
                 {
-                    transform.position = new Vector3(rightMid.position.x, rightMid.position.y, 0);
+                    transform.position = new Vector3(rightMid.position.x, rightMid.position.y, rightMid.position.z);
                     rightAnim = true;
                 }
                 else if (moveCounter <= 0)
                 {
-                    transform.position = new Vector3(rightPos.position.x, rightPos.position.y, 0);
+                    transform.position = new Vector3(rightPos.position.x, rightPos.position.y, rightPos.position.z);
                     rightAnim = false;
                 }
                 break;

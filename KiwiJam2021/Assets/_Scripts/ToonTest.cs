@@ -6,7 +6,6 @@ using ToonyColorsPro.ShaderGenerator;
 
 public class ToonTest : MonoBehaviour
 {
-    
     [SerializeField] Renderer test;
     // Start is called before the first frame update
     void Start()
@@ -18,6 +17,6 @@ public class ToonTest : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        test.material.SetVector("_BaseMap_SC", new Vector4(0.01f + 1 * Time.deltaTime, 0, 0, 0));
+        test.material.SetVector("_BaseMap_SC", new Vector4(GameManager.Instance.tileSpeed, 0, 0, 0));
     }
 }
