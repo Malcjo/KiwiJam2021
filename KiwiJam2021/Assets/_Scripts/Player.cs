@@ -344,12 +344,12 @@ public class Player : MonoBehaviour
                 previousPos = -1;
                 if (moveCounter > 0)
                 {
-                    transform.position = new Vector3(leftMid.position.x, leftMid.position.y, 0);
+                    transform.position = new Vector3(leftMid.position.x, leftMid.position.y, leftMid.position.z);
                     leftAnim = true;
                 }
                 else if (moveCounter <= 0)
                 {
-                    transform.position = new Vector3(leftPos.position.x, leftPos.position.y, 0);
+                    transform.position = new Vector3(leftPos.position.x, leftPos.position.y, leftPos.position.z);
                     leftAnim = false;
                 }
                 break;
@@ -359,7 +359,7 @@ public class Player : MonoBehaviour
                     case -1:
                         if (moveCounter > 0)
                         {
-                            transform.position = new Vector3(leftMid.position.x, leftMid.position.y, 0);
+                            transform.position = new Vector3(leftMid.position.x, leftMid.position.y, leftMid.position.z);
                             rightAnim = true;
                         }
                         else if (moveCounter <= 0)
@@ -408,35 +408,5 @@ public class Player : MonoBehaviour
     {
         Destroy(this.gameObject);
     }
-    //private void resetMesh()
-    //{
-    //    anim.SetBool("APose", false);
-    //    anim.SetBool("BPose", false);
-    //    anim.SetBool("CPose", false);
-    //    anim.SetBool("DPose", false);
-    //    anim.SetBool("EPose", false);
-    //    anim.SetBool("FPose", false);
-    //    anim.SetBool("GPose", false);
-    //    anim.SetBool("HPose", false);
-    //    anim.SetBool("IPose", false);
-    //    anim.SetBool("JPose", false);
-    //    anim.SetBool("KPose", false);
-    //    anim.SetBool("LPose", false);
-    //    anim.SetBool("MPose", false);
-    //    anim.SetBool("NPose", false);
-    //    anim.SetBool("OPose", false);
-    //    anim.SetBool("PPose", false);
-    //    anim.SetBool("QPose", false);
-    //    anim.SetBool("RPose", false);
-    //    anim.SetBool("SPose", false);
-    //    anim.SetBool("TPose", false);
-    //    anim.SetBool("UPose", false);
-    //    anim.SetBool("VPose", false);
-    //    anim.SetBool("WPose", false);
-    //    anim.SetBool("XPose", false);
-    //    anim.SetBool("YPose", false);
-    //    anim.SetBool("ZPose", false);
-    //}
-
 }
 

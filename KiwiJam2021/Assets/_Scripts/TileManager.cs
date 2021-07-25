@@ -9,7 +9,7 @@ public class TileManager : MonoBehaviour
     private Transform playerTransform;
     private float spawnZ = 0.0f;
     private float tileLength = 10;
-    private int amountTilesOnSceen = 15;
+    private int amountTilesOnSceen = 20;
     [SerializeField] Transform spawnPoint;
     [SerializeField] int random;
 
@@ -23,6 +23,14 @@ public class TileManager : MonoBehaviour
         startSpawn(0);
         startSpawn(0);
         startSpawn(1);
+        startSpawn(0);
+        startSpawn(1);
+        startSpawn(1);
+        startSpawn(0);
+        startSpawn(0);
+        startSpawn(1);
+        startSpawn(1);
+        startSpawn(0);
         startSpawn(0);
         startSpawn(1);
         startSpawn(1);
