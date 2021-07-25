@@ -12,29 +12,30 @@ public class TileManager : MonoBehaviour
     private int amountTilesOnSceen = 20;
     [SerializeField] Transform spawnPoint;
     [SerializeField] int random;
+    [SerializeField] GameManager gm;
 
     void Start()
     {
-        startSpawn(0);
-        startSpawn(1);
-        startSpawn(0);
-        startSpawn(1);
-        startSpawn(1);
-        startSpawn(0);
-        startSpawn(0);
-        startSpawn(1);
-        startSpawn(0);
-        startSpawn(1);
-        startSpawn(1);
-        startSpawn(0);
-        startSpawn(0);
-        startSpawn(1);
-        startSpawn(1);
-        startSpawn(0);
-        startSpawn(0);
-        startSpawn(1);
-        startSpawn(1);
-        startSpawn(0);
+        //startSpawn(0);
+        //startSpawn(1);
+        //startSpawn(0);
+        //startSpawn(1);
+        //startSpawn(1);
+        //startSpawn(0);
+        //startSpawn(0);
+        //startSpawn(1);
+        //startSpawn(0);
+        //startSpawn(1);
+        //startSpawn(1);
+        //startSpawn(0);
+        //startSpawn(0);
+        //startSpawn(1);
+        //startSpawn(1);
+        //startSpawn(0);
+        //startSpawn(0);
+        //startSpawn(1);
+        //startSpawn(1);
+        //startSpawn(0);
         //for (int i = 0; i < amountTilesOnSceen; i++)
         //{
 

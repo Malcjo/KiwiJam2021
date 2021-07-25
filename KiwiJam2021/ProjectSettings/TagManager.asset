@@ -12,6 +12,7 @@ TagManager:
   - TileSpawnRight
   - HitBox
   - Wall
+  - GameManager
   layers:
   - Default
   - TransparentFX

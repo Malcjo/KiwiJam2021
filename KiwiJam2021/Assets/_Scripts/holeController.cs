@@ -29,11 +29,11 @@ public class holeController : MonoBehaviour
         }
         if (entrace)
         {
-            rb.velocity = new Vector3(0, -fallSpeed, -speed) * Time.deltaTime;
+            rb.velocity = new Vector3(0, -fallSpeed, -GameManager.Instance.wallSpeed) * Time.deltaTime;
         }
         else
         {
-            rb.velocity = new Vector3(0, 0, -speed) * Time.deltaTime;
+            rb.velocity = new Vector3(0, 0, -GameManager.Instance.wallSpeed) * Time.deltaTime;
         }
     }
     public void SetUpController(GameObject wallController)
