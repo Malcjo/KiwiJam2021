@@ -10,8 +10,15 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 		[TCP2ColorNoAlpha] _HColor ("Highlight Color", Color) = (0.75,0.75,0.75,1)
 		[TCP2ColorNoAlpha] _SColor ("Shadow Color", Color) = (0.2,0.2,0.2,1)
 		_BaseMap ("Albedo", 2D) = "white" {}
+		[TCP2UVScrolling] _BaseMap_SC ("Albedo UV Scrolling", Vector) = (1,1,0,0)
 		[TCP2Separator]
 
+		[TCP2Header(Ramp Shading)]
+		
+		_RampThreshold ("Threshold", Range(0.01,1)) = 0.5
+		_RampSmoothing ("Smoothing", Range(0.001,1)) = 0.5
+		[TCP2Separator]
+		
 		[ToggleOff(_RECEIVE_SHADOWS_OFF)] _ReceiveShadowsOff ("Receive Shadows", Float) = 1
 
 		//Avoid compile error if the properties are ending with a drawer
@@ -48,7 +55,10 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 			
 			// Shader Properties
 			float4 _BaseMap_ST;
+			half4 _BaseMap_SC;
 			fixed4 _BaseColor;
+			float _RampThreshold;
+			float _RampSmoothing;
 			fixed4 _SColor;
 			fixed4 _HColor;
 		CBUFFER_END
@@ -167,10 +177,12 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 				float3 normalWS = NormalizeNormalPerPixel(input.normal);
 
 				// Shader Properties Sampling
-				float4 __albedo = ( tex2D(_BaseMap, input.pack0.xy).rgba );
+				float4 __albedo = ( tex2D(_BaseMap, input.pack0.xy + frac(_Time.yy * _BaseMap_SC.xy)).rgba );
 				float4 __mainColor = ( _BaseColor.rgba );
 				float __alpha = ( __albedo.a * __mainColor.a );
 				float __ambientIntensity = ( 1.0 );
+				float __rampThreshold = ( _RampThreshold );
+				float __rampSmoothing = ( _RampSmoothing );
 				float3 __shadowColor = ( _SColor.rgb );
 				float3 __highlightColor = ( _HColor.rgb );
 
@@ -216,13 +228,15 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 				half3 lightDir = mainLight.direction;
 				half3 lightColor = mainLight.color.rgb;
 
-				half atten = mainLight.shadowAttenuation;
+				half atten = mainLight.shadowAttenuation * mainLight.distanceAttenuation;
 
 				half ndl = dot(normalWS, lightDir);
 				half3 ramp;
 				
+				half rampThreshold = __rampThreshold;
+				half rampSmooth = __rampSmoothing * 0.5;
 				ndl = saturate(ndl);
-				ramp = float3(1, 1, 1);
+				ramp = smoothstep(rampThreshold - rampSmooth, rampThreshold + rampSmooth, ndl);
 
 				// apply attenuation
 				ramp *= atten;
@@ -249,7 +263,7 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 					half3 ramp;
 					
 					ndl = saturate(ndl);
-					ramp = float3(1, 1, 1);
+					ramp = smoothstep(rampThreshold - rampSmooth, rampThreshold + rampSmooth, ndl);
 
 					// apply attenuation (shadowmaps & point/spot lights attenuation)
 					ramp *= atten;
@@ -353,7 +367,7 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 				#endif
 
 				// Shader Properties Sampling
-				float4 __albedo = ( tex2D(_BaseMap, input.pack0.xy).rgba );
+				float4 __albedo = ( tex2D(_BaseMap, input.pack0.xy + frac(_Time.yy * _BaseMap_SC.xy)).rgba );
 				float4 __mainColor = ( _BaseColor.rgba );
 				float __alpha = ( __albedo.a * __mainColor.a );
 
@@ -437,5 +451,5 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 	CustomEditor "ToonyColorsPro.ShaderGenerator.MaterialInspector_SG2"
 }
 
-/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.7.3";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","UNITY_2020_1","TEMPLATE_LWRP","NO_RAMP_UNLIT"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False);matLayers:list[]) */
-/* TCP_HASH 543e0111ea7c63fffa106d1b2f7229e6 */
+/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.7.3";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","UNITY_2020_1","TEMPLATE_LWRP"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[sp(name:"Albedo";imps:list[imp_mp_texture(uto:True;tov:"";tov_lbl:"";gto:True;sbt:False;scr:True;scv:"";scv_lbl:"";gsc:False;roff:False;goff:False;sin_anm:False;sin_anmv:"";sin_anmv_lbl:"";gsin:False;notile:False;triplanar_local:False;def:"white";locked_uv:False;uv:0;cc:4;chan:"RGBA";mip:-1;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:Texcoord;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_BaseMap";md:"";gbv:False;custom:False;refs:"";guid:"14795509-b3a1-4c42-81fe-08b217a5d1fd";op:Multiply;lbl:"Albedo";gpu_inst:False;locked:False;impl_index:0)];layers:list[];unlocked:list[];clones:dict[];isClone:False)];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False);matLayers:list[]) */
+/* TCP_HASH 8e302a78fc7d30630b8c767479363997 */
