@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public float timer;
     public static int mode;
     [SerializeField] int pubMode;
+    public float spawnFreq;
 
     private float worldOffset = 100;
     private float tileOffset = 0.00365f;
@@ -45,21 +46,20 @@ public class GameManager : MonoBehaviour
     }
     [SerializeField] private float counterSet = 10;
     [SerializeField] private float offsetCounter;
+    [SerializeField] private float freqOffset;
     // Update is called once per frame
     void Update()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 1)
+        if (SceneManager.GetActiveScene().buildIndex == 0)
         {
-            if (!inMenu)
+            timer += 1 * Time.deltaTime;
+            if (timer > counterSet)
             {
-                timer += 1 * Time.deltaTime;
-                if (timer > counterSet)
-                {
-                    wallSpeed += worldOffset;
-                    treeSpeed += worldOffset;
-                    tileSpeed += tileOffset;
-                    counterSet = timer + offsetCounter;
-                }
+                wallSpeed += worldOffset;
+                treeSpeed += worldOffset;
+                tileSpeed += tileOffset;
+                counterSet = timer + offsetCounter;
+                spawnFreq -= freqOffset;
             }
         }
         pubMode = mode;
@@ -71,5 +71,6 @@ public class GameManager : MonoBehaviour
         wallSpeed = 300;
         treeSpeed = 300;
         tileSpeed = 0.01095f;
+        spawnFreq = 8;
     }
 }

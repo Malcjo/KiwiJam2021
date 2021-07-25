@@ -28,7 +28,7 @@ public class WallSpawner : MonoBehaviour
     }
     private void SpawnWall()
     {
-        counter = SpawnFrequency;
+        counter = GameManager.Instance.spawnFreq;
         Instantiate(wall, new Vector3(spawnPoint.position.x, spawnPoint.position.y + 100, spawnPoint.position.z), Quaternion.identity);
     }
 }

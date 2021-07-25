@@ -34618,6 +34618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72181c4347893e4ca3f6cc0762f5a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameOverText: {fileID: 0}
   leftPos: {fileID: 1017723528}
   leftMid: {fileID: 1421646185}
   midPos: {fileID: 1380477244}
@@ -48910,7 +48911,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.3199997, z: -7.65}
+  m_LocalPosition: {x: 0, y: 6.22, z: -3.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -68445,11 +68446,14 @@ MonoBehaviour:
   wallSpeed: 300
   tileSpeed: 0.01095
   treeSpeed: 300
+  index: 0
   timer: 0
   pubMode: 0
+  spawnFreq: 0
   inMenu: 0
   counterSet: 10
   offsetCounter: 10
+  freqOffset: 0
 --- !u!4 &1341138944
 Transform:
   m_ObjectHideFlags: 0

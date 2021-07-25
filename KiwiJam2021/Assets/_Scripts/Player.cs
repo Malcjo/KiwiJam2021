@@ -22,6 +22,10 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
         moveCounter -= 1 * Time.deltaTime;
         PlayerInputs();
         if (tripleMovement)
@@ -404,8 +408,7 @@ public class Player : MonoBehaviour
         if(collision.gameObject.tag == "Wall")
         {
             print("Dead");
-            GameOverText.SetActive(true);
-            StartCoroutine(GameOver());
+
             
             
         }
@@ -416,12 +419,14 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         GameManager.Instance.ResetValues();
-        SceneManager.LoadScene(0);
+        Application.Quit();
     }
         
     public void Dead()
     {
-        Destroy(this.gameObject);
+        //this.gameObject.SetActive(false);
+        GameOverText.SetActive(true);
+        StartCoroutine(GameOver());
     }
 }
 
