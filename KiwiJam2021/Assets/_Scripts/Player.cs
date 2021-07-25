@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum keys { A, B, C, D}
 public class Player : MonoBehaviour
 {
+    public GameObject GameOverText;
     [SerializeField] private Transform leftPos, leftMid, midPos, rightPos, rightMid;
     [SerializeField] private int pos;
     //0 = left, 1 = mid, 2 = right
@@ -402,8 +404,21 @@ public class Player : MonoBehaviour
         if(collision.gameObject.tag == "Wall")
         {
             print("Dead");
+            GameOverText.SetActive(true);
+            StartCoroutine(GameOver());
+            
+            
         }
+        
     }
+
+    IEnumerator GameOver()
+    {
+        yield return new WaitForSeconds(3);
+        GameManager.Instance.ResetValues();
+        SceneManager.LoadScene(0);
+    }
+        
     public void Dead()
     {
         Destroy(this.gameObject);
