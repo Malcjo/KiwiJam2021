@@ -486,6 +486,8 @@ GameObject:
   - component: {fileID: 5248976165315143319}
   - component: {fileID: 8862783377491948346}
   - component: {fileID: 1597598112278527913}
+  - component: {fileID: -4468793540919114777}
+  - component: {fileID: 6282538988506124841}
   m_Layer: 0
   m_Name: T_Block
   m_TagString: Untagged
@@ -561,3 +563,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-4468793540919114777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8793596028911404483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c90c46cc8524704da3dbd9b43bc9a17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &6282538988506124841
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8793596028911404483}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0

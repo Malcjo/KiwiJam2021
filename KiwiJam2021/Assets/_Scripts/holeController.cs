@@ -48,16 +48,16 @@ public class holeController : MonoBehaviour
             transform.position = new Vector3(transform.position.x, 0, wall.transform.position.z);
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Destroy"))
-        {
-            Destroy(this.gameObject);
-        }
-        if (other.CompareTag("HitBox"))
-        {
-            other.GetComponentInParent<Player>().Dead();
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Destroy"))
+    //    {
+    //        Destroy(this.gameObject);
+    //    }
+    //    if (other.CompareTag("HitBox"))
+    //    {
+    //        other.GetComponentInParent<Player>().Dead();
+    //    }
+    //}
 
 }

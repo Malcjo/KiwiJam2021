@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 7078882906720259934}
   - component: {fileID: 5478698668535167211}
   - component: {fileID: 6574166737796160810}
+  - component: {fileID: 9182966106995049045}
   m_Layer: 0
   m_Name: Plane (3)
   m_TagString: Untagged
@@ -144,7 +145,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SFX1: {fileID: 518156025578477542}
   SFX2: {fileID: 6528111505521963697}
-  SFX3: {fileID: 0}
+  SFX3: {fileID: 3696832750867105317}
+--- !u!54 &9182966106995049045
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7078882906720259928}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &7078882907489799730
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,6 +175,7 @@ GameObject:
   - component: {fileID: 7078882907489799728}
   - component: {fileID: 1862017173460850427}
   - component: {fileID: 7496115793187994689}
+  - component: {fileID: 6890984378540581436}
   m_Layer: 0
   m_Name: Plane (1)
   m_TagString: Untagged
@@ -256,6 +274,22 @@ MonoBehaviour:
   SFX1: {fileID: 518156025578477542}
   SFX2: {fileID: 3696832750867105317}
   SFX3: {fileID: 6528111505521963697}
+--- !u!54 &6890984378540581436
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7078882907489799730}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &7078882907537860348
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,6 +303,7 @@ GameObject:
   - component: {fileID: 7078882907537860226}
   - component: {fileID: 4903432189087641055}
   - component: {fileID: 7913031988876246430}
+  - component: {fileID: 3193755869108877453}
   m_Layer: 0
   m_Name: Plane (2)
   m_TagString: Untagged
@@ -367,6 +402,22 @@ MonoBehaviour:
   SFX1: {fileID: 518156025578477542}
   SFX2: {fileID: 6528111505521963697}
   SFX3: {fileID: 3696832750867105317}
+--- !u!54 &3193755869108877453
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7078882907537860348}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1001 &6469804870924969113
 PrefabInstance:
   m_ObjectHideFlags: 0

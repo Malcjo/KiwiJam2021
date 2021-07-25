@@ -21,14 +21,25 @@ public class AudioScript : MonoBehaviour
     {
         
     }
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "HitBox")
+        if (other.CompareTag("HitBox"))
         {
+            print("Play Sound");
             SFX1.Play();
             SFX2.Play();
             SFX3.Play();
         }
     }
+
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "HitBox")
+    //    {
+    //        print("Play Sound");
+    //        SFX1.Play();
+    //        SFX2.Play();
+    //        SFX3.Play();
+    //    }
+    //}
 }

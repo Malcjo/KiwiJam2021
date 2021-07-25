@@ -391,6 +391,7 @@ GameObject:
   - component: {fileID: 1597353697326458480}
   - component: {fileID: 2995676671327060858}
   - component: {fileID: 5886564187967374800}
+  - component: {fileID: -8195713455927147027}
   m_Layer: 0
   m_Name: Outer_Big Wall
   m_TagString: Untagged
@@ -465,3 +466,15 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-8195713455927147027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9085242510991004221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c90c46cc8524704da3dbd9b43bc9a17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

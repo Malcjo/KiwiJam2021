@@ -296,6 +296,7 @@ GameObject:
   - component: {fileID: 2690268876795059453}
   - component: {fileID: 7727061618757748141}
   - component: {fileID: 114347609338472213}
+  - component: {fileID: 6314251486583471707}
   m_Layer: 0
   m_Name: Middle_Big_Wall
   m_TagString: Untagged
@@ -369,3 +370,15 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6314251486583471707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9218859772727851840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c90c46cc8524704da3dbd9b43bc9a17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

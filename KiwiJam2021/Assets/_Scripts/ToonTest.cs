@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ToonyColorsPro;
-using ToonyColorsPro.ShaderGenerator;
 
 public class ToonTest : MonoBehaviour
 {

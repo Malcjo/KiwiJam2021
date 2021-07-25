@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public float wallSpeed;
     public float tileSpeed;
     public float treeSpeed;
-    public static int index = 0;
+    public int index = 0;
     public float timer;
     public static int mode;
     [SerializeField] int pubMode;
@@ -41,7 +41,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         mode = 0;
     }
     [SerializeField] private float counterSet = 10;
@@ -64,5 +63,13 @@ public class GameManager : MonoBehaviour
             }
         }
         pubMode = mode;
+    }
+    public void ResetValues()
+    {
+        timer = 0;
+        counterSet = 10;
+        wallSpeed = 300;
+        treeSpeed = 300;
+        tileSpeed = 0.01095f;
     }
 }

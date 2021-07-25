@@ -36,10 +36,10 @@ public class WallController : MonoBehaviour
             if (counter > 0.1f)
             {
                 int tripRand = Random.Range(0, singleMode.Length - 1);
-                GameObject wall = Instantiate(singleMode[GameManager.index], new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), Quaternion.identity);
+                GameObject wall = Instantiate(singleMode[GameManager.Instance.index], new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), Quaternion.identity);
                 wall.GetComponent<holeController>().SetUpController(this.gameObject);
                 hasSpawned = true;
-                GameManager.index += 1;
+                GameManager.Instance.index += 1;
                 //switch (GameManager.mode)
                 //{
                 //    case 0:
