@@ -27,8 +27,17 @@ public class Player : MonoBehaviour
             setPosInput();
             MoveCharacter();
         }
+        if (rightAnim)
+        {
+            anim.Play("Run_Right");
+        }
+        if (leftAnim)
+        {
+            anim.Play("Run_Left");
+        }
     }
-
+    bool rightAnim = false;
+    bool leftAnim = false;
     private void PlayerInputs()
     {
         
@@ -48,7 +57,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("B");
             isKeyPressed = true;
             return;
         }
@@ -58,7 +67,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("C");
             isKeyPressed = true;
             return;
         }
@@ -68,7 +77,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("D");
             isKeyPressed = true;
             return;
         }
@@ -78,7 +87,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("E");
             isKeyPressed = true;
             return;
         }
@@ -88,7 +97,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("F");
             isKeyPressed = true;
             return;
         }
@@ -98,7 +107,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("G");
             isKeyPressed = true;
             return;
         }
@@ -108,7 +117,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("H");
             isKeyPressed = true;
             return;
         }
@@ -118,7 +127,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("I");
             isKeyPressed = true;
             return;
         }
@@ -128,7 +137,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("J");
             isKeyPressed = true;
             return;
         }
@@ -138,7 +147,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("K");
             isKeyPressed = true;
             return;
         }
@@ -148,7 +157,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("L");
             isKeyPressed = true;
             return;
         }
@@ -158,7 +167,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("M");
             isKeyPressed = true;
             return;
         }
@@ -168,7 +177,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("N");
             isKeyPressed = true;
             return;
         }
@@ -178,7 +187,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("O");
             isKeyPressed = true;
             return;
         }
@@ -188,7 +197,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("P");
             isKeyPressed = true;
             return;
         }
@@ -198,7 +207,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("Q");
             isKeyPressed = true;
             return;
         }
@@ -208,7 +217,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("R");
             isKeyPressed = true;
             return;
         }
@@ -218,7 +227,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("S");
             isKeyPressed = true;
             return;
         }
@@ -228,7 +237,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("T");
             isKeyPressed = true;
             return;
         }
@@ -238,7 +247,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("U");
             isKeyPressed = true;
             return;
         }
@@ -248,7 +257,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("V");
             isKeyPressed = true;
             return;
         }
@@ -258,7 +267,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("W");
             isKeyPressed = true;
             return;
         }
@@ -278,7 +287,7 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("Y");
             isKeyPressed = true;
             return;
         }
@@ -288,12 +297,16 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            anim.Play("A");
+            anim.Play("Z");
             isKeyPressed = true;
             return;
         }
-        anim.Play("IDLE");
-        isKeyPressed = false;
+        if(!rightAnim && !leftAnim)
+        {
+            anim.Play("IDLE");
+            isKeyPressed = false;
+        }
+
     }
 
     private int previousPos;
@@ -332,10 +345,12 @@ public class Player : MonoBehaviour
                 if (moveCounter > 0)
                 {
                     transform.position = new Vector3(leftMid.position.x, leftMid.position.y, 0);
+                    leftAnim = true;
                 }
                 else if (moveCounter <= 0)
                 {
                     transform.position = new Vector3(leftPos.position.x, leftPos.position.y, 0);
+                    leftAnim = false;
                 }
                 break;
             case 0:
@@ -345,20 +360,24 @@ public class Player : MonoBehaviour
                         if (moveCounter > 0)
                         {
                             transform.position = new Vector3(leftMid.position.x, leftMid.position.y, 0);
+                            rightAnim = true;
                         }
                         else if (moveCounter <= 0)
                         {
                             transform.position = new Vector3(midPos.position.x, midPos.position.y, 0);
+                            rightAnim = false;
                         }
                         break;
                     case 1:
                         if (moveCounter > 0)
                         {
                             transform.position = new Vector3(rightMid.position.x, rightMid.position.y, 0);
+                            leftAnim = true;
                         }
                         else if (moveCounter <= 0)
                         {
                             transform.position = new Vector3(midPos.position.x, midPos.position.y, 0);
+                            leftAnim = false;
                         }
                         break;
                 }
@@ -368,13 +387,26 @@ public class Player : MonoBehaviour
                 if (moveCounter > 0)
                 {
                     transform.position = new Vector3(rightMid.position.x, rightMid.position.y, 0);
+                    rightAnim = true;
                 }
                 else if (moveCounter <= 0)
                 {
                     transform.position = new Vector3(rightPos.position.x, rightPos.position.y, 0);
+                    rightAnim = false;
                 }
                 break;
         }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Wall")
+        {
+            print("Dead");
+        }
+    }
+    public void Dead()
+    {
+        Destroy(this.gameObject);
     }
     //private void resetMesh()
     //{
@@ -405,5 +437,6 @@ public class Player : MonoBehaviour
     //    anim.SetBool("YPose", false);
     //    anim.SetBool("ZPose", false);
     //}
+
 }
 

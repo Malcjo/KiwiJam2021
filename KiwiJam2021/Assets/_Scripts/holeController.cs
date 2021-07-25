@@ -21,7 +21,7 @@ public class holeController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (transform.position.y <= 5.75f)
+        if (transform.position.y <= 0)
         {
             resetHeight();
             entrace = false;
@@ -45,7 +45,7 @@ public class holeController : MonoBehaviour
         if (reset)
         {
             reset = false;
-            transform.position = new Vector3(transform.position.x, 5.75f, wall.transform.position.z);
+            transform.position = new Vector3(transform.position.x, 0, wall.transform.position.z);
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -54,5 +54,10 @@ public class holeController : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        if (other.CompareTag("HitBox"))
+        {
+            other.GetComponentInParent<Player>().Dead();
+        }
     }
+
 }

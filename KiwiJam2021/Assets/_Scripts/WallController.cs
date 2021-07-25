@@ -51,7 +51,7 @@ public class WallController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if(transform.position.y <= 8f)
+        if(transform.position.y <= 0)
         {
             resetHeight();
             entrance = false;
@@ -73,7 +73,7 @@ public class WallController : MonoBehaviour
         if (reset)
         {
             reset = false;
-            transform.position = new Vector3(transform.position.x, 8, transform.position.z);
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         }
     }
     private void OnTriggerEnter(Collider other)

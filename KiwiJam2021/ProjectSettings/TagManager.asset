@@ -10,6 +10,8 @@ TagManager:
   - TileSpawnPoint
   - TileSpawnLeft
   - TileSpawnRight
+  - HitBox
+  - Wall
   layers:
   - Default
   - TransparentFX
