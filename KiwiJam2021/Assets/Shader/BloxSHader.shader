@@ -25,8 +25,8 @@ Shader "BloxSHader"
 		[TCP2Separator]
 		
 		[TCP2HeaderHelp(Triplanar Mapping)]
-		[NoScaleOffset] _TriGround ("Ground", 2D) = "white" {}
-		[NoScaleOffset] _TriSide ("Walls", 2D) = "white" {}
+		_TriGround ("Ground", 2D) = "white" {}
+		_TriSide ("Walls", 2D) = "white" {}
 		[TCP2Vector4Floats(Contrast X,Contrast Y,Contrast Z,Smoothing,1,16,1,16,1,16,0.01,1)] _TriplanarBlendStrength ("Triplanar Parameters", Vector) = (2,8,2,0.5)
 		[TCP2Separator]
 		
@@ -66,6 +66,8 @@ Shader "BloxSHader"
 		CBUFFER_START(UnityPerMaterial)
 			
 			// Shader Properties
+			float4 _TriGround_ST;
+			float4 _TriSide_ST;
 			float4 _TriplanarBlendStrength;
 			fixed4 _BaseColor;
 			float _RampThreshold;
@@ -227,11 +229,11 @@ Shader "BloxSHader"
 				float3 triplanarNormal = input.pack1.xyz;
 				
 				//ground
-				half4 triplanar = ( tex2D(_TriGround, uv_ground).rgba );
+				half4 triplanar = ( tex2D(_TriGround, uv_ground * _TriGround_ST.xy + _TriGround_ST.zw).rgba );
 				
 				//walls
-				fixed4 tex_sideX = ( tex2D(_TriSide, uv_sideX).rgba );
-				fixed4 tex_sideZ = ( tex2D(_TriSide, uv_sideZ).rgba );
+				fixed4 tex_sideX = ( tex2D(_TriSide, uv_sideX * _TriSide_ST.xy + _TriSide_ST.zw).rgba );
+				fixed4 tex_sideZ = ( tex2D(_TriSide, uv_sideZ * _TriSide_ST.xy + _TriSide_ST.zw).rgba );
 				
 				//blending
 				half3 blendWeights = pow(abs(triplanarNormal), __triplanarParameters.xyz / __triplanarParameters.w);
@@ -527,5 +529,5 @@ Shader "BloxSHader"
 	CustomEditor "ToonyColorsPro.ShaderGenerator.MaterialInspector_SG2"
 }
 
-/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.7.3";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","UNITY_2020_1","FOG","SPEC_LEGACY","SPECULAR","SPECULAR_TOON","SPECULAR_NO_ATTEN","TEMPLATE_LWRP","TRIPLANAR","TRIPLANAR_OBJECT_SPACE"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False);matLayers:list[]) */
-/* TCP_HASH 80ba9d45a3100b16e1a621b350714b35 */
+/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.7.3";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","UNITY_2020_1","FOG","SPEC_LEGACY","SPECULAR","SPECULAR_TOON","SPECULAR_NO_ATTEN","TRIPLANAR","TRIPLANAR_OBJECT_SPACE","TEMPLATE_LWRP"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[,,,,,,,,,,sp(name:"Ground Texture";imps:list[imp_mp_texture(uto:True;tov:"";tov_lbl:"";gto:False;sbt:False;scr:False;scv:"";scv_lbl:"";gsc:False;roff:False;goff:False;sin_anm:False;sin_anmv:"";sin_anmv_lbl:"";gsin:False;notile:False;triplanar_local:False;def:"white";locked_uv:True;uv:0;cc:4;chan:"RGBA";mip:-1;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:Texcoord;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_TriGround";md:"";gbv:False;custom:False;refs:"";guid:"db17189c-99b7-450f-bdd5-22eb5a3ffc86";op:Multiply;lbl:"Ground";gpu_inst:False;locked:True;impl_index:0)];layers:list[];unlocked:list[];clones:dict[];isClone:False),sp(name:"Walls Texture";imps:list[imp_mp_texture(uto:True;tov:"";tov_lbl:"";gto:False;sbt:False;scr:False;scv:"";scv_lbl:"";gsc:False;roff:False;goff:False;sin_anm:False;sin_anmv:"";sin_anmv_lbl:"";gsin:False;notile:False;triplanar_local:False;def:"white";locked_uv:True;uv:0;cc:4;chan:"RGBA";mip:-1;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:Texcoord;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_TriSide";md:"";gbv:False;custom:False;refs:"";guid:"44aa7cd1-bc24-4415-8d10-c208d3679b2a";op:Multiply;lbl:"Walls";gpu_inst:False;locked:True;impl_index:0)];layers:list[];unlocked:list[];clones:dict[];isClone:False)];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False);matLayers:list[]) */
+/* TCP_HASH dacf555c80398555456e10710a0466a9 */
