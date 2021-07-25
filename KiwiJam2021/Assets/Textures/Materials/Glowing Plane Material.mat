@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Test For Insie Letter
+  m_Name: Glowing Plane Material
   m_Shader: {fileID: 4800000, guid: d6dbb577dcf0e2445bedea395869c6d0, type: 3}
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON
   m_LightmapFlags: 4
@@ -91,7 +91,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0.5529412}
     - _BaseMap_SinAnimParams: {r: 5.7, g: 0.05, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Emission: {r: 0.5594285, g: 0.06243326, b: 0.5754717, a: 1}
+    - _Emission: {r: 0.49739972, g: 0.5, b: 0.2570755, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 1, g: 1, b: 1, a: 1}
     - _SColor: {r: 0.8018868, g: 0, b: 0, a: 1}
