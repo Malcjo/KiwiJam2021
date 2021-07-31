@@ -473,6 +473,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioSource
       objectReference: {fileID: 0}
+    - target: {fileID: 6843643395047846783, guid: 340ca8b058605334484035008a7aa9e4, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8635075578387799244, guid: 340ca8b058605334484035008a7aa9e4, type: 3}
       propertyPath: m_Name
       value: Music
